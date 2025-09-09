@@ -21,7 +21,12 @@ class Experiment(ABC):
     def __init__(self, config_path: str):
         self.config_path = config_path
         self.root = Path(config_path).parent
-        gin.parse_config_file(self.config_path)
+        try:
+            with open(self.config_path, 'r', encoding='utf-8') as f:
+                gin.parse_config(f.read())
+        except UnicodeDecodeError as e:
+            raise ValueError(f"Failed to read the config file {self.config_path}. Ensure it is encoded in UTF-8.") from e
+
 
     @gin.configurable()
     def build(self,
@@ -49,7 +54,7 @@ class Experiment(ABC):
                                       else '%s=%s' % (name.split('.')[-1], str(value).replace(' ', '_'))
                                       for name, value in instance_variables.items()])
             instance_path = os.path.join(experiment_path, instance_name)
-            Path(instance_path).mkdir(parents=True, exist_ok=False)
+            Path(instance_path).mkdir(parents=True, exist_ok=True)
 
             # write parameters
             instance_config_path = os.path.join(instance_path, 'config.gin')

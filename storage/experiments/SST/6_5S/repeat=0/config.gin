@@ -1,0 +1,48 @@
+# experiments/configs/SST/5S.gin
+# 实验配置
+build.experiment_name = 'SST/6_5S'
+build.module = 'experiments.forecast'
+build.repeat = 1
+build.variables_dict = {}
+
+# 模型类型
+instance.model_type = 'deeptime'
+instance.save_vals = True
+
+# 优化器配置
+get_optimizer.lr = 1e-5
+get_optimizer.lambda_lr = 1.
+
+# 调度器配置
+get_scheduler.warmup_epochs = 5
+
+# 数据加载配置
+get_data.batch_size =32
+# 训练配置
+train.loss_name = 'rmse'
+train.epochs = 50
+train.clip = 10.
+
+# Checkpoint 配置
+Checkpoint.patience = 3
+
+# deeptime 模型的相关配置
+deeptime.layer_size = 256
+deeptime.inr_layers = 5
+deeptime.n_fourier_feats = 4096
+deeptime.scales = [0.01, 0.1, 1, 5, 10, 20, 50, 100]
+#deeptime.n_heads = 4  
+#deeptime.attention_dropout = 0.1 
+
+
+# 数据集相关配置
+ForecastDataset.data_path = 'SST/sst_p1.csv'
+ForecastDataset.target = 'SST'
+ForecastDataset.scale = True
+ForecastDataset.cross_learn = False
+ForecastDataset.time_features = []  # 根据实际情况设置时间特征列表
+ForecastDataset.normalise_time_features = True
+ForecastDataset.features = 'S'
+ForecastDataset.horizon_len = 5
+ForecastDataset.lookback_mult = 6
+repeat = 0

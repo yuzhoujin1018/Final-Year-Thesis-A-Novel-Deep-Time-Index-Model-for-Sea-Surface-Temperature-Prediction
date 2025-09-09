@@ -1,0 +1,1 @@
+python -m experiments.forecast --config_path=storage/experiments\SST/5S\repeat=0\config.gin run >> storage/experiments\SST/5S\repeat=0/instance.log 2>&1

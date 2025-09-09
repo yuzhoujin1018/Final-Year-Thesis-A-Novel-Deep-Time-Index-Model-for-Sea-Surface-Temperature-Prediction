@@ -120,6 +120,8 @@ def get_data(flag: bool,
     return dataset, data_loader
 
 
+import time  # 导入 time 模块
+
 @gin.configurable()
 def train(model: nn.Module,
           checkpoint: Checkpoint,
@@ -135,6 +137,7 @@ def train(model: nn.Module,
     training_loss_fn = get_loss_fn(loss_name)
 
     for epoch in range(epochs):
+        start_time = time.time()  # 记录 epoch 开始时间
         train_loss = []
         model.train()
         for it, data in enumerate(train_loader):
@@ -166,6 +169,9 @@ def train(model: nn.Module,
                    'Loss/Val': val_loss,
                    'Loss/Test': test_loss}
         checkpoint(epoch + 1, model, scalars=scalars)
+
+        epoch_time = time.time() - start_time  # 计算 epoch 的训练时间
+        logging.info(f"Epoch {epoch + 1} completed in {epoch_time:.2f} seconds")  # 输出训练时间
 
         if checkpoint.early_stop:
             logging.info("Early stopping")

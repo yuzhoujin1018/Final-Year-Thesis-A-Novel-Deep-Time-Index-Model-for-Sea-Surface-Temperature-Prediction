@@ -41,8 +41,8 @@ class ForecastDataset(Dataset):
         (for models with decoders which requires initialisation)
         :param lookback_mult: multiplier to decide lookback window length
         """
-        assert flag in ('train', 'val', 'test'), \
-            f"flag should be one of (train, val, test)"
+        assert flag in ('train', 'val', 'test', 'all'), \
+            f"flag should be one of (train, val, test,all)"
         assert features in ('M', 'S'), \
             f"features should be one of (M: multivar, S: univar)"
         assert (lookback_len is not None) ^ (lookback_mult is not None), \
@@ -103,8 +103,15 @@ class ForecastDataset(Dataset):
         self.n_time = len(self.data_x)
         self.n_time_samples = self.n_time - self.lookback_len - self.horizon_len + 1
 
-    def get_borders(self, df_raw: pd.DataFrame) -> Tuple[List[int], List[int], List[int], List[int]]:
+    def get_borders(self, df_raw: pd.DataFrame) -> Tuple[List[int], List[int], int, int]:
+        if self.flag == 'all':
+            border1 = 0
+            border2 = len(df_raw)
+            return [border1], [border2], border1, border2
+
         set_type = {'train': 0, 'val': 1, 'test': 2}[self.flag]
+
+
         if self.data_path.startswith('ETT-small/ETTh'):
             border1s = [0, 12 * 30 * 24 - self.lookback_len, 12 * 30 * 24 + 4 * 30 * 24 - self.lookback_len]
             border2s = [12 * 30 * 24, 12 * 30 * 24 + 4 * 30 * 24, 12 * 30 * 24 + 8 * 30 * 24]

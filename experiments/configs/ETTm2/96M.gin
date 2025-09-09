@@ -13,7 +13,7 @@ get_optimizer.weight_decay = 0.
 
 get_scheduler.warmup_epochs = 5
 
-get_data.batch_size = 256
+get_data.batch_size = 64
 
 train.loss_name = 'mse'
 train.epochs = 50
