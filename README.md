@@ -1,10 +1,6 @@
 # Final Year Thesis: A Novel Deep Time-Index Model for Sea Surface Temperature Prediction
 
-<p align="center">
-<img src=".\pics\deeptime.png" width = "700" alt="" align=center />
-<br><br>
-<b>Figure 1.</b> Overall approach of DeepTime.
-</p>
+
 
 Official PyTorch code repository for the [DeepTime paper](https://proceedings.mlr.press/v202/woo23b.html). Check out our [blog post](https://blog.salesforceairesearch.com/deeptime-meta-learning-time-series-forecasting/)!
 
