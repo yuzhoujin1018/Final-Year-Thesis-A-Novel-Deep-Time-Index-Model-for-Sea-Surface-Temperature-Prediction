@@ -1,4 +1,4 @@
-# Learning Deep Time-index Models for Time Series Forecasting (ICML 2023)
+# Final Year Thesis: A Novel Deep Time-Index Model for Sea Surface Temperature Prediction
 
 <p align="center">
 <img src=".\pics\deeptime.png" width = "700" alt="" align=center />
